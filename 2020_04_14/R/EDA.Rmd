@@ -1,0 +1,60 @@
+---
+title: "TidyTuesday 2020 week 16: Best Rap Artists"
+subtitle: https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-14/readme.md
+output: html_notebook
+---
+
+```{r setup}
+pckgs <- c("extrafont","patchwork","cowplot","grid","gridExtra","ggrepel",
+  "reshape2","ggforce","ggridges","shiny","ggthemes","ggplot2",
+  "tidyverse", "viridis","lubridate", "here")
+
+invisible(lapply(pckgs, library, character.only = TRUE))
+```
+
+Data Input:
+
+```{r input, results='hide'}
+polls <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-14/polls.csv')
+rankings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-14/rankings.csv')
+```
+
+Lets look at the data:
+
+```{r}
+glimpse(rankings)
+```
+
+```{r}
+glimpse(polls)
+```
+
+# Rankings
+
+```{r}
+summary(rankings)
+```
+
+```{r}
+rankings %>% n_distinct(title)
+```
+
+311 songs - each ranked `n` times with the total amount of points equal to `points` .
+
+```{r}
+rankings <- rankings %>% 
+  mutate(decade = (year %/% 10)*10)
+```
+
+```{r}
+rankings %>% 
+  count(decade)
+```
+
+Most of the songs come from the 90s, only one from the 70s, which one is it?
+
+```{r}
+rankings %>% filter(decade == 1970)
+```
+
+
