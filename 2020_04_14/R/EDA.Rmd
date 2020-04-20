@@ -57,4 +57,161 @@ Most of the songs come from the 90s, only one from the 70s, which one is it?
 rankings %>% filter(decade == 1970)
 ```
 
+What are the best years in terms of rating?
 
+```{r}
+rankings %>% 
+  group_by(year) %>% 
+  summarise(total_points = sum(points)) %>% 
+  ggplot(aes(x=year,y=total_points)) +
+  geom_point() +
+  geom_line()
+```
+
+The ratings spiked around the nineteen-nineties and have been on a decline since.
+
+```{r}
+rankings %>% 
+  group_by(decade) %>% 
+  summarise(max = max(points))
+```
+
+There is however a song in the last decade that surpassed the best rated one in the 
+decade before.
+
+```{r}
+rankings %>% 
+  group_by(decade) %>% 
+  do(arrange(.,desc(points))) %>% 
+  slice(1)
+```
+
+Runaway by Kanye West ft. Pusha T is rated higher than Rapper's Delight and B.O.B.
+
+Which artist has the most titles in the dataset?
+
+```{r}
+rankings %>% 
+  count(artist,sort = TRUE)
+```
+
+Jay-Z has the most rated titles - 15.
+
+The majority of artists has only one title rated.
+
+```{r}
+rankings %>% 
+  count(artist) %>% 
+  count(n)
+```
+
+```{r}
+rankings %>% 
+  group_by(artist) %>% 
+  summarise(n_decades = n_distinct(decade)) %>% 
+  arrange(desc(n_decades))
+```
+
+Jay-Z is also the only one who has a title rated within three decades period.
+
+We know that The Notorious B.I.G. has the best rated title, does it also mean he
+has the most points in total?
+
+```{r}
+rankings %>% 
+  group_by(artist) %>% 
+  summarise(total_points = sum(points)) %>% 
+  arrange(desc(total_points)) %>% 
+  top_n(15)
+```
+
+Yes! The Notorious B.I.G. has the most points in total as well as the best rated title.
+
+It still holds in terms of average rating.
+
+```{r}
+rankings %>% 
+  group_by(artist) %>% 
+  summarise(mean_points = mean(points), n = n()) %>% 
+  arrange(desc(mean_points)) %>% 
+  top_n(15)
+```
+
+## Gender related questions
+
+What is the ratio of men-women?
+
+```{r}
+rankings %>% 
+  count(gender)
+```
+
+Whats the gender average rating?
+
+```{r}
+rankings %>% 
+  group_by(gender) %>% 
+  summarise(avg_rating = mean(points))
+```
+
+Are there years when female artists had the best rated title?
+
+```{r}
+rankings %>% 
+  group_by(year) %>% 
+  do(arrange(.,desc(points))) %>% 
+  slice(1) %>% 
+  filter(gender=="female")
+```
+
+There are five years when female artists had the best rated title.
+
+```{r}
+rankings %>% 
+  filter(gender=="female") %>% 
+  arrange(desc(points))
+```
+
+The best-rated female title however was not the best rated title in the year 1993.
+
+What about a year when female artists would have the most points in total or
+the better average rating?
+
+```{r}
+rankings %>% 
+  group_by(gender, year) %>% 
+  summarise(sum_points = sum(points), avg_points = mean(points)) %>% 
+  ungroup() %>% 
+  group_by(year) %>% 
+  mutate(rank_sum = rank(desc(sum_points)),
+         rank_avg = rank(desc(avg_points))) %>% 
+  filter(gender=="female" & (rank_sum==1|rank_avg==1))
+```
+
+1980 is the only year when female artists had the most points in total. There are 8 years when female titles had higher avgerage rating then male or mixed artists.
+
+Which female artist has :
+ - the most titles
+ - the most points 
+ - the best avg rating
+ 
+```{r}
+rankings %>% 
+  filter(gender=="female") %>% 
+  group_by(artist) %>% 
+  summarise(n_songs=n(), points_total=sum(points), points_avg=mean(points)) %>% 
+  arrange(desc(n_songs))
+```
+ 
+ Missy Elliott has the most songs, but Lauryn Hill has the best rated one.
+ 
+ What is the first year a female title is rated?
+ 
+```{r}
+rankings %>% 
+  filter(gender=="female") %>% 
+  arrange(year) %>% 
+  top_n(10)
+```
+ 
+ 
