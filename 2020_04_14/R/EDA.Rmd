@@ -25,9 +25,14 @@ Lets look at the data:
 glimpse(rankings)
 ```
 
+Any missing values?
 ```{r}
-glimpse(polls)
+rankings %>% 
+  map_lgl(~any(is.na(.))) %>% 
+  any()
+  
 ```
+
 
 # Rankings
 
@@ -137,6 +142,27 @@ rankings %>%
   top_n(15)
 ```
 
+ Is there any title ranked in more then one year?
+ 
+```{r}
+rankings %>% 
+  count(title, sort = TRUE)
+```
+ 
+ There are two of them:
+ 
+```{r}
+rankings %>% filter(title %in% c('All Of The Lights','Hip Hop'))
+```
+ 
+ So Hip Hop is a name shared by two distinct titles, however it looks the All Of The Lights has a male as well as mixed version, both from 2010.
+ 
+```{r}
+rankings %>% 
+  mutate(n_ratings = n1 + n2 + n3 + n4 + n5) %>% 
+  group_by()
+```
+
 ## Gender related questions
 
 What is the ratio of men-women?
@@ -213,5 +239,6 @@ rankings %>%
   arrange(year) %>% 
   top_n(10)
 ```
+ 
  
  

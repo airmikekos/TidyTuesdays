@@ -1,0 +1,52 @@
+---
+title: "TidyTuesday 2020 week 16: Best Rap Artists"
+subtitle: Visualisations
+output: html_notebook
+---
+
+```{r setup}
+pckgs <- c("extrafont","patchwork","cowplot","grid","gridExtra","ggrepel",
+  "reshape2","ggforce","ggridges","shiny","ggthemes","ggplot2",
+  "tidyverse", "viridis","ggbeeswarm","lubridate", "here")
+
+invisible(lapply(pckgs, library, character.only = TRUE))
+```
+
+Data Input:
+
+```{r input, results='hide'}
+polls <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-14/polls.csv')
+rankings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-14/rankings.csv')
+```
+
+```{r}
+rankings2 <- rankings %>% 
+  mutate(decade = (year %/% 10)*10,
+         cnt = 1) %>% 
+  group_by(year) %>% 
+  arrange(points) 
+```
+
+
+```{r}
+ggplot(rankings2, aes(x=year,y=cnt, color = log(points))) +
+  geom_beeswarm(beeswarmArgs = list(side = 1),
+                groupOnX = FALSE,
+                size = 2) +
+  ylim(1,1.05) +
+  scale_x_continuous(breaks = min(rankings$year):max(rankings$year),
+                     limits = c(1979, 2019)) +
+  scale_color_viridis(discrete = FALSE, option = "C") +
+  theme(axis.line.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.text.x = element_text(hjust = 0),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.x = element_line(),
+        panel.grid = element_blank(),
+        axis.text.x.bottom = element_text(angle = 60),
+        panel.background = element_blank()
+        )
+```
+
