@@ -5,9 +5,7 @@ output: html_notebook
 ---
 
 ```{r setup}
-pckgs <- c("extrafont","patchwork","cowplot","grid","gridExtra","ggrepel",
-  "reshape2","ggforce","ggridges","shiny","ggthemes","ggplot2",
-  "tidyverse", "viridis","ggbeeswarm","lubridate", "here")
+pckgs <- c("ggplot2","tidyverse", "viridis","lubridate", "here","grid", "ggbeeswarm","ggpubr","png")
 
 invisible(lapply(pckgs, library, character.only = TRUE))
 ```
@@ -23,30 +21,60 @@ rankings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/t
 rankings2 <- rankings %>% 
   mutate(decade = (year %/% 10)*10,
          cnt = 1) %>% 
+  arrange(year) %>% 
   group_by(year) %>% 
   arrange(points) 
 ```
 
 
 ```{r}
+img <- png::readPNG(here("input","rap_wallpaper.png"))
+```
+
+```{r}
+color_years <- c(rep("white",11),rep("gold",10),rep("white",18))
+```
+
+```{r}
+t1 <- textGrob(expression(phantom(bold("1990s")) * " was the " * phantom(bold("golden era")) * " of the rap music"),
+               x = 0.3, y = 0.95, gp = gpar(col = "white", fontsize=14))
+
+t2 <- textGrob(expression(bold("1990s") * phantom(" was the ") * bold("golden era") * phantom(" of the rap music")),
+               x = 0.3, y = 0.95, gp = gpar(col = "gold",fontsize=14))
+```
+
+
+
+```{r}
 ggplot(rankings2, aes(x=year,y=cnt, color = log(points))) +
+  background_image(img) +
   geom_beeswarm(beeswarmArgs = list(side = 1),
                 groupOnX = FALSE,
-                size = 2) +
+                size = 2,
+                alpha = 0.8) +
   ylim(1,1.05) +
   scale_x_continuous(breaks = min(rankings$year):max(rankings$year),
-                     limits = c(1979, 2019)) +
+                     limits = c(min(rankings$year), max(rankings$year)),
+                     expand = c(0,0.2)) +
   scale_color_viridis(discrete = FALSE, option = "C") +
   theme(axis.line.y = element_blank(),
         axis.text.y = element_blank(),
-        axis.text.x = element_text(hjust = 0),
+        axis.text.x = element_text(hjust=1,vjust=1,color = color_years, size = 9),
         axis.ticks.y = element_blank(),
+        axis.ticks.x = element_line(color = "white"),
         axis.title.y = element_blank(),
         axis.title.x = element_blank(),
-        axis.line.x = element_line(),
+        axis.line.x = element_line(color = "white", size = 1),
         panel.grid = element_blank(),
         axis.text.x.bottom = element_text(angle = 60),
-        panel.background = element_blank()
-        )
+        panel.background = element_rect(fill = "grey"),
+        plot.background = element_rect(fill = "black"),
+        legend.position = "none",
+        plot.title = element_text(color = "white"),
+        plot.margin = unit(c(0.1, 0.4, 0.2, 0.2), "lines")
+        ) +
+  annotation_custom(grobTree(t1,t2))
+  # + ggtitle("1990s was the golden era of rap music!")
 ```
+
 
