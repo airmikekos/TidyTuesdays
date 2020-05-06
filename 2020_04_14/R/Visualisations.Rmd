@@ -23,29 +23,44 @@ rankings2 <- rankings %>%
          cnt = 1) %>% 
   arrange(year) %>% 
   group_by(year) %>% 
-  arrange(points) 
-```
+  arrange(points) %>% 
+  ungroup()
 
-
-```{r}
 img <- png::readPNG(here("input","rap_wallpaper.png"))
-```
 
-```{r}
 color_years <- c(rep("white",11),rep("gold",10),rep("white",18))
-```
 
-```{r}
-t1 <- textGrob(expression(phantom(bold("1990s")) * " was the " * phantom(bold("golden era")) * " of the rap music"),
-               x = 0.3, y = 0.95, gp = gpar(col = "white", fontsize=14))
+t1 <- textGrob(expression(phantom(bold("1990s")) * " was the " * phantom(bold("golden era")) * " of the rap music:"),
+               x = 0.35, y = 0.95, gp = gpar(col = "white", fontsize=18))
 
-t2 <- textGrob(expression(bold("1990s") * phantom(" was the ") * bold("golden era") * phantom(" of the rap music")),
-               x = 0.3, y = 0.95, gp = gpar(col = "gold",fontsize=14))
-```
+t2 <- textGrob(expression(bold("1990s") * phantom(" was the ") * bold("golden era") * phantom(" of the rap music:")),
+               x = 0.35, y = 0.95, gp = gpar(col = "gold",fontsize=18))
 
+t3 <- textGrob(expression(phantom(bold("95")) * " of the " * phantom(bold("207")) *
+                          " unique " * phantom(bold("artists"))),
+               x = 0.15, y = 0.85, gp = gpar(col="white", fontsize=11))
 
+t4 <- textGrob(expression(bold("95") * phantom(" of the ") * bold("207") *
+                          phantom(" unique ") * bold("artists")),
+               x = 0.15, y = 0.85, gp = gpar(col="gold", fontsize=11))
+                          
 
-```{r}
+t5 <- textGrob(expression(phantom(bold("138")) * " of the " * phantom(bold("311")) *
+                          " rated " * phantom(bold("titles"))),
+               x = 0.45, y = 0.85, gp = gpar(col="white", fontsize=11))
+
+t6 <- textGrob(expression(bold("138") * phantom(" of the ") * bold("311") *
+                          phantom(" rated ") * bold("titles")),
+               x = 0.45, y = 0.85, gp = gpar(col="gold", fontsize=11))
+
+t7 <- textGrob(expression(phantom(bold("1650")) * " of the " * phantom(bold("3210")) *
+                          " awarded " * phantom(bold("points"))),
+               x = 0.8, y = 0.85, gp = gpar(col="white", fontsize=11))
+
+t8 <- textGrob(expression(bold("1650") * phantom(" of the ") * bold("3210") *
+                          phantom(" awarded ") * bold("points")),
+               x = 0.8, y = 0.85, gp = gpar(col="gold", fontsize=11))
+
 ggplot(rankings2, aes(x=year,y=cnt, color = log(points))) +
   background_image(img) +
   geom_beeswarm(beeswarmArgs = list(side = 1),
@@ -56,7 +71,9 @@ ggplot(rankings2, aes(x=year,y=cnt, color = log(points))) +
   scale_x_continuous(breaks = min(rankings$year):max(rankings$year),
                      limits = c(min(rankings$year), max(rankings$year)),
                      expand = c(0,0.2)) +
-  scale_color_viridis(discrete = FALSE, option = "C") +
+  scale_color_viridis(name = "log of total points awarded",
+                      discrete = FALSE, option = "C") +
+  guides(fill = guide_legend(nrow = 1)) +
   theme(axis.line.y = element_blank(),
         axis.text.y = element_blank(),
         axis.text.x = element_text(hjust=1,vjust=1,color = color_years, size = 9),
@@ -69,12 +86,30 @@ ggplot(rankings2, aes(x=year,y=cnt, color = log(points))) +
         axis.text.x.bottom = element_text(angle = 60),
         panel.background = element_rect(fill = "grey"),
         plot.background = element_rect(fill = "black"),
-        legend.position = "none",
+        legend.position="bottom",
+        legend.background = element_rect(fill="black"),
+        legend.title = element_text(color = "white", size = 8,vjust = 0.9),
+        legend.text = element_text(color= "white",size = 8),
+        legend.margin = margin(0, 0, 0, 0, "cm"),
+        legend.key.width = unit(1,"cm"),
+        legend.key.height = unit(0.1, "cm"),
         plot.title = element_text(color = "white"),
-        plot.margin = unit(c(0.1, 0.4, 0.2, 0.2), "lines")
+        plot.margin = unit(c(0.1, 0.4, 0.6, 0.2), "lines"),
+        plot.caption = element_text(size = 8, color = "white")
         ) +
-  annotation_custom(grobTree(t1,t2))
-  # + ggtitle("1990s was the golden era of rap music!")
+  annotation_custom(grobTree(t1,t2)) +
+  annotation_custom(grobTree(t3,t4)) +
+  annotation_custom(grobTree(t5,t6)) +
+  annotation_custom(grobTree(t7,t8))
+
 ```
+
+```{r}
+ggsave(here::here("plots","bbc_rap_poll.png"), width = 8, height = 5)
+```
+
+
+
+
 
 

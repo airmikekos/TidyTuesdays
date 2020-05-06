@@ -1,0 +1,849 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={TidyTuesday 2020 week 16: Best Rap Artists},
+  pdfborder={0 0 0},
+  breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-2}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{TidyTuesday 2020 week 16: Best Rap Artists}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{\url{https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-14/readme.md}}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pckgs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{,}\StringTok{"lubridate"}\NormalTok{, }\StringTok{"here"}\NormalTok{)}
+
+\KeywordTok{invisible}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(pckgs, library, }\DataTypeTok{character.only =} \OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages ---------------------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.0     v purrr   0.3.4
+## v tibble  3.0.1     v dplyr   0.8.5
+## v tidyr   1.0.2     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     intersect, setdiff, union
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{verbatim}
+## here() starts at C:/Users/Micha/Documents/Rko/data_visualization/TidyTuesdays/2020_04_14
+\end{verbatim}
+
+Data Input:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{polls <-}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_csv}\NormalTok{(}\StringTok{'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-14/polls.csv'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   rank = col_double(),
+##   title = col_character(),
+##   artist = col_character(),
+##   gender = col_character(),
+##   year = col_double(),
+##   critic_name = col_character(),
+##   critic_rols = col_character(),
+##   critic_country = col_character(),
+##   critic_country2 = col_character()
+## )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings <-}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_csv}\NormalTok{(}\StringTok{'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-14/rankings.csv'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   ID = col_double(),
+##   title = col_character(),
+##   artist = col_character(),
+##   year = col_double(),
+##   gender = col_character(),
+##   points = col_double(),
+##   n = col_double(),
+##   n1 = col_double(),
+##   n2 = col_double(),
+##   n3 = col_double(),
+##   n4 = col_double(),
+##   n5 = col_double()
+## )
+\end{verbatim}
+
+Lets look at the data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{glimpse}\NormalTok{(rankings)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 311
+## Columns: 12
+## $ ID     <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1...
+## $ title  <chr> "Juicy", "Fight The Power", "Shook Ones (Part II)", "The Mes...
+## $ artist <chr> "The Notorious B.I.G.", "Public Enemy", "Mobb Deep", "Grandm...
+## $ year   <dbl> 1994, 1989, 1995, 1982, 1992, 1993, 1993, 1992, 1994, 1995, ...
+## $ gender <chr> "male", "male", "male", "male", "male", "male", "male", "mal...
+## $ points <dbl> 140, 100, 94, 90, 84, 62, 50, 48, 46, 42, 38, 36, 36, 34, 32...
+## $ n      <dbl> 18, 11, 13, 14, 14, 10, 7, 6, 7, 6, 5, 5, 4, 6, 5, 5, 4, 5, ...
+## $ n1     <dbl> 9, 7, 4, 5, 2, 3, 2, 3, 1, 2, 2, 1, 2, 1, 1, 0, 2, 2, 1, 1, ...
+## $ n2     <dbl> 3, 3, 5, 3, 4, 1, 2, 2, 3, 1, 0, 1, 2, 0, 1, 3, 1, 0, 1, 1, ...
+## $ n3     <dbl> 3, 1, 1, 1, 2, 1, 2, 0, 1, 1, 3, 3, 0, 2, 2, 1, 0, 1, 1, 1, ...
+## $ n4     <dbl> 1, 0, 1, 0, 4, 4, 0, 0, 1, 2, 0, 0, 0, 3, 0, 0, 1, 0, 1, 0, ...
+## $ n5     <dbl> 2, 0, 2, 5, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 2, 1, 2, ...
+\end{verbatim}
+
+Any missing values?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{map_lgl}\NormalTok{(}\OperatorTok{~}\KeywordTok{any}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(.))) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{any}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\hypertarget{rankings}{%
+\section{Rankings}\label{rankings}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(rankings)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        ID           title              artist               year     
+##  Min.   :  1.0   Length:311         Length:311         Min.   :1979  
+##  1st Qu.: 78.5   Class :character   Class :character   1st Qu.:1994  
+##  Median :156.0   Mode  :character   Mode  :character   Median :1999  
+##  Mean   :156.0                                         Mean   :2000  
+##  3rd Qu.:233.5                                         3rd Qu.:2007  
+##  Max.   :311.0                                         Max.   :2019  
+##     gender              points             n               n1        
+##  Length:311         Min.   :  2.00   Min.   : 1.00   Min.   :0.0000  
+##  Class :character   1st Qu.:  4.00   1st Qu.: 1.00   1st Qu.:0.0000  
+##  Mode  :character   Median :  6.00   Median : 1.00   Median :0.0000  
+##                     Mean   : 10.32   Mean   : 1.72   Mean   :0.3441  
+##                     3rd Qu.: 10.00   3rd Qu.: 2.00   3rd Qu.:0.0000  
+##                     Max.   :140.00   Max.   :18.00   Max.   :9.0000  
+##        n2               n3               n4               n5        
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.0000  
+##  Median :0.0000   Median :0.0000   Median :0.0000   Median :0.0000  
+##  Mean   :0.3441   Mean   :0.3441   Mean   :0.3441   Mean   :0.3441  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   :5.0000   Max.   :3.0000   Max.   :4.0000   Max.   :5.0000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }\KeywordTok{n_distinct}\NormalTok{(title)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 311
+\end{verbatim}
+
+311 songs - each ranked \texttt{n} times with the total amount of points
+equal to \texttt{points} .
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings <-}\StringTok{ }\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{decade =}\NormalTok{ (year }\OperatorTok{%/%}\StringTok{ }\DecValTok{10}\NormalTok{)}\OperatorTok{*}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{count}\NormalTok{(decade)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   decade     n
+##    <dbl> <int>
+## 1   1970     1
+## 2   1980    32
+## 3   1990   138
+## 4   2000    73
+## 5   2010    67
+\end{verbatim}
+
+Most of the songs come from the 90s, only one from the 70s, which one is
+it?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(decade }\OperatorTok{==}\StringTok{ }\DecValTok{1970}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 13
+##      ID title artist  year gender points     n    n1    n2    n3    n4    n5
+##   <dbl> <chr> <chr>  <dbl> <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1    13 Rapp~ Sugar~  1979 male       36     4     2     2     0     0     0
+## # ... with 1 more variable: decade <dbl>
+\end{verbatim}
+
+What are the best years in terms of rating?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{total_points =} \KeywordTok{sum}\NormalTok{(points)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{year,}\DataTypeTok{y=}\NormalTok{total_points)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{EDA_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+The ratings spiked around the nineteen-nineties and have been on a
+decline since.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(decade) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{max =} \KeywordTok{max}\NormalTok{(points))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   decade   max
+##    <dbl> <dbl>
+## 1   1970    36
+## 2   1980   100
+## 3   1990   140
+## 4   2000    32
+## 5   2010    38
+\end{verbatim}
+
+There is however a song in the last decade that surpassed the best rated
+one in the decade before.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(decade) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{do}\NormalTok{(}\KeywordTok{arrange}\NormalTok{(.,}\KeywordTok{desc}\NormalTok{(points))) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 13
+## # Groups:   decade [5]
+##      ID title artist  year gender points     n    n1    n2    n3    n4    n5
+##   <dbl> <chr> <chr>  <dbl> <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1    13 Rapp~ Sugar~  1979 male       36     4     2     2     0     0     0
+## 2     2 Figh~ Publi~  1989 male      100    11     7     3     1     0     0
+## 3     1 Juicy The N~  1994 male      140    18     9     3     3     1     2
+## 4    17 B.O.~ OutKa~  2000 male       32     4     2     1     0     1     0
+## 5    11 Runa~ Kanye~  2010 male       38     5     2     0     3     0     0
+## # ... with 1 more variable: decade <dbl>
+\end{verbatim}
+
+Runaway by Kanye West ft. Pusha T is rated higher than Rapper's Delight
+and B.O.B.
+
+Which artist has the most titles in the dataset?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{count}\NormalTok{(artist,}\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 207 x 2
+##    artist                   n
+##    <chr>                <int>
+##  1 JAY-Z                   15
+##  2 Kendrick Lamar          10
+##  3 A Tribe Called Quest     7
+##  4 Eric B & Rakim           7
+##  5 OutKast                  7
+##  6 2Pac                     6
+##  7 Kanye West               6
+##  8 Nas                      6
+##  9 Lil Wayne                5
+## 10 Wu-Tang Clan             5
+## # ... with 197 more rows
+\end{verbatim}
+
+Jay-Z has the most rated titles - 15.
+
+The majority of artists has only one title rated.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{count}\NormalTok{(artist) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{count}\NormalTok{(n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 9 x 2
+##       n    nn
+##   <int> <int>
+## 1     1   172
+## 2     2    15
+## 3     3     5
+## 4     4     5
+## 5     5     2
+## 6     6     3
+## 7     7     3
+## 8    10     1
+## 9    15     1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(artist) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{n_decades =} \KeywordTok{n_distinct}\NormalTok{(decade)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(n_decades))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 207 x 2
+##    artist         n_decades
+##    <chr>              <int>
+##  1 JAY-Z                  3
+##  2 Common                 2
+##  3 Eminem                 2
+##  4 Eric B & Rakim         2
+##  5 Kanye West             2
+##  6 Lil Wayne              2
+##  7 Lupe Fiasco            2
+##  8 Missy Elliott          2
+##  9 Nas                    2
+## 10 OutKast                2
+## # ... with 197 more rows
+\end{verbatim}
+
+Jay-Z is also the only one who has a title rated within three decades
+period.
+
+We know that The Notorious B.I.G. has the best rated title, does it also
+mean he has the most points in total?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(artist) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{total_points =} \KeywordTok{sum}\NormalTok{(points)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(total_points)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DecValTok{15}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Selecting by total_points
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 16 x 2
+##    artist                               total_points
+##    <chr>                                       <dbl>
+##  1 The Notorious B.I.G.                          162
+##  2 Public Enemy                                  144
+##  3 Wu-Tang Clan                                  120
+##  4 JAY-Z                                         102
+##  5 Mobb Deep                                      98
+##  6 OutKast                                        94
+##  7 Grandmaster Flash & The Furious Five           90
+##  8 Nas                                            90
+##  9 2Pac                                           88
+## 10 Dr Dre ft. Snoop Doggy Dogg                    86
+## 11 Eric B & Rakim                                 80
+## 12 Kendrick Lamar                                 74
+## 13 A Tribe Called Quest                           72
+## 14 Kanye West                                     66
+## 15 NWA                                            50
+## 16 Souls of Mischief                              50
+\end{verbatim}
+
+Yes! The Notorious B.I.G. has the most points in total as well as the
+best rated title.
+
+It still holds in terms of average rating.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(artist) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_points =} \KeywordTok{mean}\NormalTok{(points), }\DataTypeTok{n =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(mean_points)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DecValTok{15}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Selecting by n
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 15 x 3
+##    artist               mean_points     n
+##    <chr>                      <dbl> <int>
+##  1 The Notorious B.I.G.        40.5     4
+##  2 Public Enemy                36       4
+##  3 Wu-Tang Clan                24       5
+##  4 Nas                         15       6
+##  5 2Pac                        14.7     6
+##  6 OutKast                     13.4     7
+##  7 Eric B & Rakim              11.4     7
+##  8 Kanye West                  11       6
+##  9 Missy Elliott               10.5     4
+## 10 A Tribe Called Quest        10.3     7
+## 11 Lupe Fiasco                  9       4
+## 12 Kendrick Lamar               7.4    10
+## 13 JAY-Z                        6.8    15
+## 14 Future                       6       4
+## 15 Lil Wayne                    6       5
+\end{verbatim}
+
+Is there any title ranked in more then one year?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{count}\NormalTok{(title, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 309 x 2
+##    title                         n
+##    <chr>                     <int>
+##  1 All Of The Lights             2
+##  2 Hip Hop                       2
+##  3 1 Train                       1
+##  4 22 Two’s                      1
+##  5 4th Chamber                   1
+##  6 93 ’Til Infinity              1
+##  7 A Milli                       1
+##  8 Above The Clouds              1
+##  9 Act Too (Love of My Life)     1
+## 10 Aiiight Chill                 1
+## # ... with 299 more rows
+\end{verbatim}
+
+There are two of them:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(title }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'All Of The Lights'}\NormalTok{,}\StringTok{'Hip Hop'}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 13
+##      ID title artist  year gender points     n    n1    n2    n3    n4    n5
+##   <dbl> <chr> <chr>  <dbl> <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1    41 Hip ~ Dead ~  2000 male       16     2     1     0     1     0     0
+## 2    43 All ~ Kanye~  2010 mixed      16     2     0     2     0     0     0
+## 3    70 All ~ Kanye~  2010 male       10     1     1     0     0     0     0
+## 4   126 Hip ~ Mos D~  1999 male        8     1     0     1     0     0     0
+## # ... with 1 more variable: decade <dbl>
+\end{verbatim}
+
+So Hip Hop is a name shared by two distinct titles, however it looks the
+All Of The Lights has a male as well as mixed version, both from 2010.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{n_ratings =}\NormalTok{ n1 }\OperatorTok{+}\StringTok{ }\NormalTok{n2 }\OperatorTok{+}\StringTok{ }\NormalTok{n3 }\OperatorTok{+}\StringTok{ }\NormalTok{n4 }\OperatorTok{+}\StringTok{ }\NormalTok{n5) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 311 x 14
+##       ID title artist  year gender points     n    n1    n2    n3    n4    n5
+##    <dbl> <chr> <chr>  <dbl> <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1     1 Juicy The N~  1994 male      140    18     9     3     3     1     2
+##  2     2 Figh~ Publi~  1989 male      100    11     7     3     1     0     0
+##  3     3 Shoo~ Mobb ~  1995 male       94    13     4     5     1     1     2
+##  4     4 The ~ Grand~  1982 male       90    14     5     3     1     0     5
+##  5     5 Nuth~ Dr Dr~  1992 male       84    14     2     4     2     4     2
+##  6     6 C.R.~ Wu-Ta~  1993 male       62    10     3     1     1     4     1
+##  7     7 93 ’~ Souls~  1993 male       50     7     2     2     2     0     1
+##  8     8 Pass~ The P~  1992 male       48     6     3     2     0     0     1
+##  9     9 N.Y.~ Nas     1994 male       46     7     1     3     1     1     1
+## 10    10 Dear~ 2Pac    1995 male       42     6     2     1     1     2     0
+## # ... with 301 more rows, and 2 more variables: decade <dbl>, n_ratings <dbl>
+\end{verbatim}
+
+\hypertarget{gender-related-questions}{%
+\subsection{Gender related questions}\label{gender-related-questions}}
+
+What is the ratio of men-women?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{count}\NormalTok{(gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   gender     n
+##   <chr>  <int>
+## 1 female    23
+## 2 male     268
+## 3 mixed     20
+\end{verbatim}
+
+Whats the gender average rating?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(gender) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{avg_rating =} \KeywordTok{mean}\NormalTok{(points))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   gender avg_rating
+##   <chr>       <dbl>
+## 1 female       8.35
+## 2 male        10.7 
+## 3 mixed        7.4
+\end{verbatim}
+
+Are there years when female artists had the best rated title?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{do}\NormalTok{(}\KeywordTok{arrange}\NormalTok{(.,}\KeywordTok{desc}\NormalTok{(points))) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(gender}\OperatorTok{==}\StringTok{"female"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 13
+## # Groups:   year [5]
+##      ID title artist  year gender points     n    n1    n2    n3    n4    n5
+##   <dbl> <chr> <chr>  <dbl> <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1   200 Vici~ Tanya~  1980 female      6     1     0     0     1     0     0
+## 2    20 Doo ~ Laury~  1998 female     28     5     1     1     1     0     2
+## 3    61 Get ~ Missy~  2001 female     10     3     0     0     1     0     2
+## 4   144 Supe~ Nicki~  2011 female      8     1     0     1     0     0     0
+## 5    64 Boda~ Cardi~  2017 female     10     2     0     0     1     1     0
+## # ... with 1 more variable: decade <dbl>
+\end{verbatim}
+
+There are five years when female artists had the best rated title.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(gender}\OperatorTok{==}\StringTok{"female"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(points))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 23 x 13
+##       ID title artist  year gender points     n    n1    n2    n3    n4    n5
+##    <dbl> <chr> <chr>  <dbl> <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1    19 U.N.~ Queen~  1993 female     30     5     1     1     1     1     1
+##  2    20 Doo ~ Laury~  1998 female     28     5     1     1     1     0     2
+##  3    38 Lost~ Laury~  1998 female     16     3     0     1     1     0     1
+##  4    39 Work~ Missy~  2002 female     16     3     0     0     2     1     0
+##  5    48 The ~ Missy~  1997 female     14     2     1     0     0     1     0
+##  6    61 Get ~ Missy~  2001 female     10     3     0     0     1     0     2
+##  7    64 Boda~ Cardi~  2017 female     10     2     0     0     1     1     0
+##  8   144 Supe~ Nicki~  2011 female      8     1     0     1     0     0     0
+##  9   182 Mo(u~ Akua ~  2012 female      6     1     0     0     1     0     0
+## 10   186 Pape~ M.I.A.  2008 female      6     1     0     0     1     0     0
+## # ... with 13 more rows, and 1 more variable: decade <dbl>
+\end{verbatim}
+
+The best-rated female title however was not the best rated title in the
+year 1993.
+
+What about a year when female artists would have the most points in
+total or the better average rating?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(gender, year) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{sum_points =} \KeywordTok{sum}\NormalTok{(points), }\DataTypeTok{avg_points =} \KeywordTok{mean}\NormalTok{(points)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{rank_sum =} \KeywordTok{rank}\NormalTok{(}\KeywordTok{desc}\NormalTok{(sum_points)),}
+         \DataTypeTok{rank_avg =} \KeywordTok{rank}\NormalTok{(}\KeywordTok{desc}\NormalTok{(avg_points))) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(gender}\OperatorTok{==}\StringTok{"female"} \OperatorTok{&}\StringTok{ }\NormalTok{(rank_sum}\OperatorTok{==}\DecValTok{1}\OperatorTok{|}\NormalTok{rank_avg}\OperatorTok{==}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 8 x 6
+## # Groups:   year [8]
+##   gender  year sum_points avg_points rank_sum rank_avg
+##   <chr>  <dbl>      <dbl>      <dbl>    <dbl>    <dbl>
+## 1 female  1980          6          6        1        1
+## 2 female  1993         32         16        2        1
+## 3 female  1997         18          9        3        1
+## 4 female  1998         48         16        2        1
+## 5 female  2001         14          7        2        1
+## 6 female  2002         16         16        2        1
+## 7 female  2011         10          5        2        1
+## 8 female  2012          6          6        2        1
+\end{verbatim}
+
+1980 is the only year when female artists had the most points in total.
+There are 8 years when female titles had higher avgerage rating then
+male or mixed artists.
+
+Which female artist has : - the most titles - the most points - the best
+avg rating
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(gender}\OperatorTok{==}\StringTok{"female"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(artist) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{n_songs=}\KeywordTok{n}\NormalTok{(), }\DataTypeTok{points_total=}\KeywordTok{sum}\NormalTok{(points), }\DataTypeTok{points_avg=}\KeywordTok{mean}\NormalTok{(points)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(n_songs))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 18 x 4
+##    artist                       n_songs points_total points_avg
+##    <chr>                          <int>        <dbl>      <dbl>
+##  1 Missy Elliott                      4           42       10.5
+##  2 Lauryn Hill                        2           44       22  
+##  3 Salt-N-Pepa                        2            8        4  
+##  4 Akua Naru                          1            6        6  
+##  5 Cardi B                            1           10       10  
+##  6 Foxy Brown                         1            4        4  
+##  7 Janelle Monae                      1            4        4  
+##  8 Kanyi                              1            2        2  
+##  9 Kreayshawn                         1            2        2  
+## 10 Lauryn Hill ft. Mary J Blige       1            4        4  
+## 11 Lil’ Kim                           1            6        6  
+## 12 M.I.A.                             1            6        6  
+## 13 Megan Thee Stallion                1            2        2  
+## 14 Missy Elliott ft. Da Brat          1            4        4  
+## 15 Nicki Minaj                        1            8        8  
+## 16 Queen Latifah                      1           30       30  
+## 17 Roxanne Shante                     1            4        4  
+## 18 Tanya ‘Sweet Tee’ Winley           1            6        6
+\end{verbatim}
+
+Missy Elliott has the most songs, but Lauryn Hill has the best rated
+one.
+
+What is the first year a female title is rated?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rankings }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(gender}\OperatorTok{==}\StringTok{"female"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(year) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{top_n}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Selecting by decade
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 12 x 13
+##       ID title artist  year gender points     n    n1    n2    n3    n4    n5
+##    <dbl> <chr> <chr>  <dbl> <chr>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1    61 Get ~ Missy~  2001 female     10     3     0     0     1     0     2
+##  2   238 Oh Y~ Foxy ~  2001 female      4     1     0     0     0     1     0
+##  3    39 Work~ Missy~  2002 female     16     3     0     0     2     1     0
+##  4   296 Pass~ Missy~  2003 female      2     1     0     0     0     0     1
+##  5   186 Pape~ M.I.A.  2008 female      6     1     0     0     1     0     0
+##  6   144 Supe~ Nicki~  2011 female      8     1     0     1     0     0     0
+##  7   274 Gucc~ Kreay~  2011 female      2     1     0     0     0     0     1
+##  8   182 Mo(u~ Akua ~  2012 female      6     1     0     0     1     0     0
+##  9    64 Boda~ Cardi~  2017 female     10     2     0     0     1     1     0
+## 10   290 Ngqa~ Kanyi   2017 female      2     1     0     0     0     0     1
+## 11   225 I Li~ Janel~  2018 female      4     1     0     0     0     1     0
+## 12   297 Real~ Megan~  2019 female      2     1     0     0     0     0     1
+## # ... with 1 more variable: decade <dbl>
+\end{verbatim}
+
+\end{document}
