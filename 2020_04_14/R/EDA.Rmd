@@ -1,13 +1,15 @@
 ---
-title: "TidyTuesday 2020 week 16: Best Rap Artists"
+title: 'TidyTuesday 2020 week 16: Best Rap Artists'
 subtitle: https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-14/readme.md
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
 ---
 
 ```{r setup}
-pckgs <- c("extrafont","patchwork","cowplot","grid","gridExtra","ggrepel",
-  "reshape2","ggforce","ggridges","shiny","ggthemes","ggplot2",
-  "tidyverse", "viridis","lubridate", "here")
+pckgs <- c("tidyverse","lubridate", "here")
 
 invisible(lapply(pckgs, library, character.only = TRUE))
 ```
