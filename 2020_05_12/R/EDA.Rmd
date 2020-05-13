@@ -1,0 +1,71 @@
+---
+title: 'TidyTuesday 2020 week 20: Volcano Eruptions'
+subtitle: https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-12/readme.md
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+---
+
+```{r setup}
+pckgs <- c("tidyverse","lubridate", "here","ggraph","igraph","emojifont","pals","widyr")
+
+invisible(lapply(pckgs, library, character.only = TRUE))
+```
+
+```{r}
+events <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-12/events.csv')
+```
+
+
+```{r}
+graph_df <- events %>%
+  mutate(event_type_clean = str_replace(event_type,"\\(.*\\)","")) %>%
+  filter(!str_detect(event_type_clean,"VEI")) %>%
+  pairwise_count(event_type_clean, eruption_number,sort=TRUE) %>%
+  mutate(rn = row_number()) %>%
+  filter(rn %% 2 != 0) %>%
+  head(50)
+
+counts <- events %>%
+  mutate(event_type_clean = str_replace(event_type,"\\(.*\\)","")) %>%
+  count(event_type_clean) %>%
+  filter(event_type_clean %in% graph_df$item1 | event_type_clean %in% graph_df$item2) %>% 
+  mutate(emoji=emoji("volcano"))
+
+
+colors <- as.vector(kelly(21))
+colors <- c("#DF76A0",colors[2:21])
+
+graph_df %>%
+  igraph::graph_from_data_frame(vertices = counts) %>%
+  ggraph() +
+  geom_edge_link(aes(width=n),alpha=0.2,color="salmon1",show.legend = FALSE) +
+  #geom_node_text(aes(label = emoji,size=40),
+  #               family="EmojiOne",
+  #               show.legend = FALSE,
+  #               position = position_nudge(y=0.1)
+  #               ) +
+  geom_node_text(aes(label=name, color = name),
+                   # position = position_nudge(y=0.15),
+                    repel = TRUE,
+                    show.legend = FALSE,
+                    label.padding = 0.35,
+                    fontface=2,
+                    size = 6) +
+  geom_node_point(aes(color=name, size = n), alpha=0.3, show.legend = FALSE) +
+  scale_color_manual(values=colors) +
+  labs(title = "Most frequent combinations of volcano related events",
+       caption = "Source: The Smithsonian Institution") +
+  theme(plot.background = element_rect(fill = "ivory"),
+        panel.background = element_rect(fill = "ivory"),
+        plot.title = element_text(face = "bold", size = 24),
+        plot.caption = element_text(size = 10)
+  )
+
+```
+
+```{r}
+ggsave(here("plots","volcano_events.png"), width = 5, height = 3)
+```
+
